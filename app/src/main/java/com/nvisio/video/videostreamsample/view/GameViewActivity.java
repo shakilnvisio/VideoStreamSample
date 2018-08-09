@@ -1,4 +1,4 @@
-package com.nvisio.video.videostreamsample;
+package com.nvisio.video.videostreamsample.view;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+
+import com.nvisio.video.videostreamsample.R;
 
 public class GameViewActivity extends AppCompatActivity {
 

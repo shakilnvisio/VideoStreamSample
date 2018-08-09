@@ -1,4 +1,4 @@
-package com.nvisio.video.videostreamsample;
+package com.nvisio.video.videostreamsample.view;
 
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -34,8 +34,9 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.upstream.TransferListener;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.exoplayer2.video.VideoRendererEventListener;
+import com.nvisio.video.videostreamsample.R;
 
-public class VideoActivity extends AppCompatActivity {
+public class VideoPlayActivity extends AppCompatActivity {
 
     private static final String KEY_PLAY_WHEN_READY = "play_when_ready";
     private static final String KEY_WINDOW = "window";
@@ -56,6 +57,7 @@ public class VideoActivity extends AppCompatActivity {
     private static final DefaultBandwidthMeter BANDWIDTH_METER = new DefaultBandwidthMeter();
     private SharedPreferences preferences;
     private ComponentListener componentListener;
+    private String link;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +79,7 @@ public class VideoActivity extends AppCompatActivity {
 
             Log.d("boo>>","oncretae: pos: "+playbackPosition);
         }
+       //link = getIntent().getStringExtra("link");
         mediaDataSourceFactory = new DefaultDataSourceFactory(this,
                 Util.getUserAgent(this, "mediaPlayerSample"), (TransferListener<? super DataSource>) bandwidthMeter);
     }
@@ -122,7 +125,7 @@ public class VideoActivity extends AppCompatActivity {
 
     private MediaSource buildMediaSource(Uri uri){
         String userAgent = "exoplayer-codelab";
-
+        //return new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory(userAgent)).createMediaSource(uri);
         if (uri.getLastPathSegment().contains("mp4")){
             return new ExtractorMediaSource.Factory(new DefaultHttpDataSourceFactory(userAgent)).createMediaSource(uri);
         }

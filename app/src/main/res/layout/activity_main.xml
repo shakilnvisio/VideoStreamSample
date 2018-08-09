@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true"
     android:background="#000"
-    tools:context=".VideoActivity">
+    tools:context=".view.VideoPlayActivity">
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:layout_width="match_parent"

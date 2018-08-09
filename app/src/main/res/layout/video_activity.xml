@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular One"
+                android:id="@+id/popOne"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:textStyle="bold"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:id="@+id/vidRecOne"
+                android:layout_below="@id/popOne"
+                android:layout_margin="10dp">
+            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular Two"
+                android:id="@+id/popTwo"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_below="@id/vidRecOne"
+                android:textStyle="bold"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:id="@+id/vidRecTwo"
+                android:layout_below="@id/popTwo"
+                android:layout_margin="10dp">
+            </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular Three"
+                android:id="@+id/popThree"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_below="@id/vidRecTwo"
+                android:textStyle="bold"/>
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:id="@+id/vidRecThree"
+                android:layout_below="@id/popThree"
+                android:layout_margin="10dp">
+            </android.support.v7.widget.RecyclerView>
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>
