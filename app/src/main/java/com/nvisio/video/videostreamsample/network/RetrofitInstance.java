@@ -1,5 +1,7 @@
 package com.nvisio.video.videostreamsample.network;
 
+import android.util.Log;
+
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import okhttp3.OkHttpClient;
@@ -26,6 +28,15 @@ public class RetrofitInstance {
                 .client(httpClient)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create());
+        retrofit = builder.build();
+    }
+
+
+    public static String getBaseUrl(){
+        return BASE_URL;
+    }
+    public static void changeBaseUrlToDefualt(){
+        BASE_URL="https://www.googleapis.com/youtube/v3/";
     }
 
     public static <S> S createService(Class<S> serviceClass){

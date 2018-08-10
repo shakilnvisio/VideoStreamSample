@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.nvisio.video.videostreamsample.R;
+import com.nvisio.video.videostreamsample.view.news.NewsActivity;
 
 public class NavigationActivity extends AppCompatActivity {
 
@@ -23,6 +24,11 @@ public class NavigationActivity extends AppCompatActivity {
 
     public void VideoActivity(View view) {
         startActivity(new Intent(NavigationActivity.this,VideoActivity.class));
+        finish();
+    }
+
+    public void NewsActivity(View view) {
+        startActivity(new Intent(NavigationActivity.this,NewsActivity.class));
         finish();
     }
 }

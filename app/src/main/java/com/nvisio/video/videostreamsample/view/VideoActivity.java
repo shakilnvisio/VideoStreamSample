@@ -15,6 +15,7 @@ import com.nvisio.video.videostreamsample.model.youtube.Item;
 import com.nvisio.video.videostreamsample.model.youtube.YoutubeApiModel;
 import com.nvisio.video.videostreamsample.network.RetrofitClient;
 import com.nvisio.video.videostreamsample.network.RetrofitInstance;
+import com.nvisio.video.videostreamsample.view.news.NewsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,9 @@ public class VideoActivity extends AppCompatActivity implements YoutubeAdapter.Y
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_activity);
         disposable = new CompositeDisposable();
+        Log.d("url>>","video: "+RetrofitInstance.getBaseUrl());
+        RetrofitInstance.changeApiBaseUrl(getString(R.string.youtube_base_url));
         service = RetrofitInstance.createService(RetrofitClient.class);
-        //RetrofitInstance.changeApiBaseUrl(getString(R.string.youtube_base_url));
         initRec();
         //initListener();
         getVideosOne();
@@ -145,5 +147,12 @@ public class VideoActivity extends AppCompatActivity implements YoutubeAdapter.Y
     protected void onDestroy() {
         super.onDestroy();
         disposable.clear();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(VideoActivity.this, NavigationActivity.class));
+        finish();
     }
 }

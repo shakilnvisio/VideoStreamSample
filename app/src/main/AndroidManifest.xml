@@ -21,6 +21,8 @@
             android:screenOrientation="landscape"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"/>
         <activity android:name=".view.VideoActivity" />
+        <activity android:name=".view.news.NewsDetailsActivity" />
+        <activity android:name=".view.news.NewsActivity" />
     </application>
 
 </manifest>
