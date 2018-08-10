@@ -41,7 +41,8 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.RecyclerViewHo
     @Override
     public RecyclerViewHolders onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_single_row, null);
+        //View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_single_row, null);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_single_row_tow, null);
         RecyclerViewHolders rcv = new RecyclerViewHolders(layoutView);
         return rcv;
     }
@@ -54,6 +55,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.RecyclerViewHo
                 .into(holder.newsImage);
         holder.headline.setText(itemDeals.getTitle());
         holder.source.setText(itemDeals.getSource().getName());
+        holder.publishedText.setText(itemDeals.getPublishedAt());
 
     }
 
@@ -64,24 +66,25 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.RecyclerViewHo
 
 
     public class RecyclerViewHolders extends RecyclerView.ViewHolder implements View.OnClickListener {
-        //get the view's references
-        //private Textview textView
         private ImageView newsImage;
         private TextView headline;
-        private RelativeLayout readmore;
+        //private RelativeLayout readmore;
         private TextView source;
+        private TextView publishedText;
+
 
         public RecyclerViewHolders(View itemView) {
             super(itemView);
-            //itemView.setOnClickedListener(this);
-            //initialise the Views here and set the views where i want to have onClicked event option
-            //i.e textView=(Textview)findViewById(R.id.text);
-            //
-            newsImage = itemView.findViewById(R.id.newsImage);
-            headline = itemView.findViewById(R.id.headline);
-            source = itemView.findViewById(R.id.source);
-            readmore = itemView.findViewById(R.id.readMoreRec);
-            readmore.setOnClickListener(this);
+//            newsImage = itemView.findViewById(R.id.newsImage);
+//            headline = itemView.findViewById(R.id.headline);
+//            source = itemView.findViewById(R.id.source);
+//            readmore = itemView.findViewById(R.id.readMoreRec);
+//            readmore.setOnClickListener(this);
+
+            newsImage = itemView.findViewById(R.id.newsThumbnail);
+            headline = itemView.findViewById(R.id.headlineText);
+            source = itemView.findViewById(R.id.sourceText);
+            publishedText = itemView.findViewById(R.id.publishedText);
         }
 
         @Override

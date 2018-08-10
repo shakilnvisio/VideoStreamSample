@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="10dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:src="@drawable/messi"
+            android:scaleType="centerCrop"
+            android:id="@+id/newsThumbnail"
+            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_alignParentBottom="true">
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="25dp"
+                android:id="@+id/categoryText"
+                android:text="Sports"
+                android:background="@drawable/white_bg"
+                android:fontFamily="@font/lato"
+                android:gravity="center"
+                android:textColor="#000"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/headlineText"
+                tools:text="Review scenes for a new Heritage at the Museum at New York, America. And it is filled up."
+                android:textColor="#FFF"
+                android:fontFamily="@font/roboto_bold"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_below="@id/categoryText"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:id="@+id/publishedText"
+                android:layout_marginTop="5dp"
+                tools:text="Feb 25, 2018"
+                android:textColor="#fff"
+                android:fontFamily="@font/lato"
+                android:layout_below="@id/headlineText"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:id="@+id/sourceText"
+                tools:text="www.cnn.com"
+                android:textColor="@color/news_source"
+                android:fontFamily="@font/lato"
+                android:layout_below="@id/headlineText"
+                android:layout_toEndOf="@id/publishedText"
+                android:layout_toRightOf="@id/publishedText"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>
