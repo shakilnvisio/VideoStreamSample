@@ -23,6 +23,9 @@
         <activity android:name=".view.VideoActivity" />
         <activity android:name=".view.news.NewsDetailsActivity" />
         <activity android:name=".view.news.NewsActivity" />
+        <activity android:name=".view.music.AudioActivity" />
+
+        <service android:name=".AudioPlayerService" />
     </application>
 
 </manifest>

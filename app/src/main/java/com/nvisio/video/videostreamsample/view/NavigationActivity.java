@@ -17,10 +17,10 @@ public class NavigationActivity extends AppCompatActivity {
         setContentView(R.layout.navigation);
     }
 
-    public void GameActivity(View view) {
+   /* public void GameActivity(View view) {
         startActivity(new Intent(NavigationActivity.this,GameViewActivity.class));
         finish();
-    }
+    }*/
 
     public void VideoActivity(View view) {
         startActivity(new Intent(NavigationActivity.this,VideoActivity.class));

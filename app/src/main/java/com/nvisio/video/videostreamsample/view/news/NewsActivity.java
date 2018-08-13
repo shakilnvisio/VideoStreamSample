@@ -2,20 +2,29 @@ package com.nvisio.video.videostreamsample.view.news;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nvisio.video.videostreamsample.R;
+import com.nvisio.video.videostreamsample.adapter.DemoAdapetr;
 import com.nvisio.video.videostreamsample.adapter.NewsAdapter;
+import com.nvisio.video.videostreamsample.model.demoModel;
 import com.nvisio.video.videostreamsample.model.news.Article;
 import com.nvisio.video.videostreamsample.model.news.NewsApiModel;
 import com.nvisio.video.videostreamsample.network.RetrofitClient;
 import com.nvisio.video.videostreamsample.network.RetrofitInstance;
 import com.nvisio.video.videostreamsample.view.NavigationActivity;
+import com.yarolegovich.discretescrollview.DSVOrientation;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.transform.Pivot;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +39,11 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
     private RetrofitClient service;
     private RecyclerView recyclerView;
     private List<Article> articlesData;
-
+    private RelativeLayout progressContainer;
+    //demo
+   /* private DiscreteScrollView scrollView;
+    private List<demoModel> category;
+    private DemoAdapetr demoAdapetr;*/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +53,41 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
         service = RetrofitInstance.createService(RetrofitClient.class);
         init();
         getNews();
+
+        //demo
+       /* demo();
+        demoAdapetr = new DemoAdapetr(category);
+        scrollView.setAdapter(demoAdapetr);
+        // general
+        scrollView.setOrientation(DSVOrientation.HORIZONTAL);
+        scrollView.setItemTransformer(new ScaleTransformer.Builder()
+        .setMaxScale(1.05f)
+        .setMinScale(0.8f)
+        .setPivotX(Pivot.X.CENTER)
+        .setPivotY(Pivot.Y.BOTTOM)
+        .build());*/
     }
 
     private void init(){
+        //scrollView = findViewById(R.id.discrete);
+        progressContainer = findViewById(R.id.progressContainer);
         recyclerView = findViewById(R.id.recyclerview);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         //linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
+
+    /*private void demo(){
+        category = new ArrayList<>();
+
+        for (int i = 0; i <10 ; i++) {
+            demoModel demoModel = new demoModel();
+            demoModel.setCategoryName("Sports");
+            category.add(demoModel);
+        }
+    }*/
+
     private void getNews() {
         articlesData = new ArrayList<>();
         disposable.add(service.getNews()
@@ -64,7 +103,7 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
             NewsAdapter adapter = new NewsAdapter(this,articlesData);
             recyclerView.setAdapter(adapter);
             adapter.setOnClicked(this);
-
+            showRecyclerAfter5sec();
 
     }
 
@@ -84,7 +123,7 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
     @Override
     public void readMoreClicked(int p) {
         String title = articlesData.get(p).getTitle();
-        Toast.makeText(this, ""+title, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, ""+title, Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent(NewsActivity.this,NewsDetailsActivity.class);
         intent.putExtra("headline",title);
@@ -94,6 +133,14 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
         startActivity(intent);
         finish();
 
+    }
+
+    private void showRecyclerAfter5sec(){
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            progressContainer.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        },7000);
     }
 
     @Override
