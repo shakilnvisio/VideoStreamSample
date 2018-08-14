@@ -31,4 +31,9 @@ public class NavigationActivity extends AppCompatActivity {
         startActivity(new Intent(NavigationActivity.this,NewsActivity.class));
         finish();
     }
+
+    public void Advertise(View view) {
+        startActivity(new Intent(NavigationActivity.this,AdvertiseDemoActivity.class));
+        finish();
+    }
 }
