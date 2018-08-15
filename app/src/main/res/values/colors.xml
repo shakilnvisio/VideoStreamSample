@@ -13,6 +13,8 @@
     <color name="news_source">#719AC2</color>
     <color name="category_text">#8F9297</color>
 
+
+    <color name="zero">#00FFFFFF</color>
     <color name="ten">#1AFFFFFF</color>
     <color name="twenty">#33FFFFFF</color>
     <color name="thirty">#4DFFFFFF</color>

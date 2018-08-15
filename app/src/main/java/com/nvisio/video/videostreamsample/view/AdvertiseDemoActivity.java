@@ -95,6 +95,7 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
                 else{
                     slider.setVisibility(View.VISIBLE);
                     slider.resumeSlide();
+                   changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.zero));
                     doWhenSlideUiIsCollapsed();
                 }
             }
@@ -145,10 +146,10 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
         DemoAdapter demoAdapter = new DemoAdapter(slideList,this);
         discreteScrollView.setAdapter(demoAdapter);
         discreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
-                .setMaxScale(1.15f)
+                .setMaxScale(1.05f)
                 .setMinScale(0.8f)
                 .setPivotX(Pivot.X.CENTER) // CENTER is a default one
-                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
+                .setPivotY(Pivot.Y.CENTER) // CENTER is a default one
                 .build());
     }
 
