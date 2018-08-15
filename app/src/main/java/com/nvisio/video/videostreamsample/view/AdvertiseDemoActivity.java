@@ -8,24 +8,32 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.nvisio.video.videostreamsample.R;
+import com.nvisio.video.videostreamsample.adapter.DemoAdapter;
+import com.nvisio.video.videostreamsample.library.listener.OnSlideChangeListener;
 import com.nvisio.video.videostreamsample.library.model.Slide;
 import com.nvisio.video.videostreamsample.library.ui.Slider;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
+import com.yarolegovich.discretescrollview.transform.Pivot;
+import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdvertiseDemoActivity extends AppCompatActivity{
+public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideChangeListener{
 
     private SlidingUpPanelLayout mLayout;
+    private DiscreteScrollView discreteScrollView;
     private Slider slider;
     private String TAG = "slide>>";
     private boolean isCollapsed= false;
+    List<Slide> slideList;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +41,13 @@ public class AdvertiseDemoActivity extends AppCompatActivity{
         init();
         SlidingUpPanel();
         AddDataToSlider();
+        setupDiscreteScrollView();
     }
 
     private void init(){
         mLayout = findViewById(R.id.sliding_layout);
         slider = findViewById(R.id.slide);
+        discreteScrollView = findViewById(R.id.picker);
     }
 
     private void SlidingUpPanel(){
@@ -45,41 +55,19 @@ public class AdvertiseDemoActivity extends AppCompatActivity{
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
                 Log.i(TAG, "onPanelSlide, offset " + slideOffset);
-           /*     if (isCollapsed && slideOffset>0.9){
-                    Log.i("Tag>>", "offset > " + slideOffset);
-                    YoYo.with(Techniques.FadeOutUp)
-                            .duration(100)
-                            .playOn(slider);
-                }
-                else if (isCollapsed && slideOffset<0.1){
-                    Log.i("Tag>>", "offset < " + slideOffset);
-                    YoYo.with(Techniques.FadeIn)
-                            .duration(500)
-                            .playOn(slider);
-                }
-                else{}*/
             }
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                Log.i(TAG, "onPanelStateChanged " + newState);
                if (newState.toString().equals("EXPANDED")){
                     slider.setVisibility(View.GONE);
                     slider.pauseSlide();
-                    Log.i(TAG, "Visibility GONE");
                 }
                 else{
                     slider.setVisibility(View.VISIBLE);
                     slider.resumeSlide();
-                    Log.i(TAG, "Visibility VISIBLE");
+                    doWhenSlideUiIsCollapsed();
                 }
-/*
-               if (newState.toString().equals("EXPANDED")){
-                   isCollapsed = false;
-               }
-               else{
-                   isCollapsed = true;
-               }*/
             }
         });
         mLayout.setFadeOnClickListener(new View.OnClickListener() {
@@ -89,13 +77,27 @@ public class AdvertiseDemoActivity extends AppCompatActivity{
             }
         });
     }
+
+    @Override
+    public void onSlideChange(int selectedSlidePosition) {
+        Toast.makeText(this, ""+selectedSlidePosition, Toast.LENGTH_SHORT).show();
+        discreteScrollView.smoothScrollToPosition(selectedSlidePosition-1);
+        discreteScrollView.setItemTransitionTimeMillis(1000);
+    }
+
+    private void doWhenSlideUiIsCollapsed(){
+        int currentItem = discreteScrollView.getCurrentItem();
+        slider.backFromExpand(currentItem);
+        Log.d("dis>>","current: "+currentItem);
+    }
+
     private void AddDataToSlider(){
         //create list of slides
-        List<Slide> slideList = new ArrayList<>();
-        slideList.add(new Slide(0,"http://cssslider.com/sliders/demo-20/data1/images/picjumbo.com_img_4635.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
-        slideList.add(new Slide(1,"http://cssslider.com/sliders/demo-12/data1/images/picjumbo.com_hnck1995.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
-        slideList.add(new Slide(2,"http://cssslider.com/sliders/demo-19/data1/images/picjumbo.com_hnck1588.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
-        slideList.add(new Slide(3,"http://wowslider.com/sliders/demo-18/data1/images/shanghai.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
+        slideList = new ArrayList<>();
+        slideList.add(new Slide(1,"http://cssslider.com/sliders/demo-20/data1/images/picjumbo.com_img_4635.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
+        slideList.add(new Slide(2,"http://cssslider.com/sliders/demo-12/data1/images/picjumbo.com_hnck1995.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
+        slideList.add(new Slide(3,"http://cssslider.com/sliders/demo-19/data1/images/picjumbo.com_hnck1588.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
+        slideList.add(new Slide(4,"http://wowslider.com/sliders/demo-18/data1/images/shanghai.jpg" , getResources().getDimensionPixelSize(R.dimen.slider_image_corner)));
 
         //handle slider click listener
         slider.setItemClickListener(new AdapterView.OnItemClickListener() {
@@ -106,7 +108,29 @@ public class AdvertiseDemoActivity extends AppCompatActivity{
         });
         //add slides to slider
         slider.addSlides(slideList);
+        slider.slideChange(this);
     }
+
+    private void setupDiscreteScrollView(){
+        DemoAdapter demoAdapter = new DemoAdapter(slideList,this);
+        discreteScrollView.setAdapter(demoAdapter);
+        discreteScrollView.setItemTransformer(new ScaleTransformer.Builder()
+                .setMaxScale(1.15f)
+                .setMinScale(0.8f)
+                .setPivotX(Pivot.X.CENTER) // CENTER is a default one
+                .setPivotY(Pivot.Y.BOTTOM) // CENTER is a default one
+                .build());
+    }
+
+
+
+    public void Pause(View view) {
+        slider.pauseSlide();
+    }
+    public void Resume(View view) {
+        slider.resumeSlide();
+    }
+
 
 
     @Override
@@ -116,14 +140,9 @@ public class AdvertiseDemoActivity extends AppCompatActivity{
             mLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
         } else {
             super.onBackPressed();
+            slider.pauseSlide();
             startActivity(new Intent(AdvertiseDemoActivity.this,NavigationActivity.class));
             finish();
         }
     }
-
-    public void Pause(View view) {
-        slider.pauseSlide();
-
-    }
-
 }

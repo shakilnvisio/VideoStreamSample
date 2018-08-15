@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_layout"
     android:gravity="bottom"
+    style="@style/slideStyle"
     sothree:umanoPanelHeight="40dp"
     sothree:umanoShadowHeight="4dp"
     sothree:umanoParallaxOffset="100dp"
@@ -21,6 +22,13 @@
             android:text="Pause"
             android:layout_centerInParent="true"
             android:onClick="Pause"
+            />
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:text="Resume"
+            android:layout_centerHorizontal="true"
+            android:onClick="Resume"
             />
     </RelativeLayout>
 
@@ -38,22 +46,25 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="vertical">
-            <com.nvisio.video.videostreamsample.library.ui.Slider
+                <com.nvisio.video.videostreamsample.library.ui.Slider
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/slide"
+                    app:intervalSecond="10"
+                    app:loopSlides="true">
+                </com.nvisio.video.videostreamsample.library.ui.Slider>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.yarolegovich.discretescrollview.DiscreteScrollView
+                android:id="@+id/picker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/slide"
-                app:intervalSecond="10"
-                app:loopSlides="true"
-                >
-            </com.nvisio.video.videostreamsample.library.ui.Slider>
-        </LinearLayout>
+                app:dsv_orientation="horizontal"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
 
-        <ImageView
-            android:layout_width="375dp"
-            android:layout_height="375dp"
-            android:id="@+id/image"
-            android:src="@drawable/messi"
-            android:scaleType="centerCrop"/>
     </LinearLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

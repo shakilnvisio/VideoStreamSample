@@ -11,12 +11,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
 import com.nvisio.video.videostreamsample.R;
+import com.nvisio.video.videostreamsample.library.listener.OnSlideChangeListener;
 import com.nvisio.video.videostreamsample.library.model.Slide;
 import com.nvisio.video.videostreamsample.library.ui.adapter.SliderAdapter;
 import com.nvisio.video.videostreamsample.library.ui.customUI.LooperWrapViewPager;
@@ -31,18 +33,14 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
     private AdapterView.OnItemClickListener itemClickListener;
 
     //Custom attributes
-    private Drawable selectedSlideIndicator;
-    private Drawable unSelectedSlideIndicator;
-    private int defaultIndicator;
-    private int indicatorSize;
-    private boolean mustAnimateIndicators;
     private boolean mustLoopSlides;
     private int slideShowInterval = 5000;
-
     private Handler handler = new Handler();
     private int slideCount;
     private int currentPageNumber;
-    private boolean hideIndicators = false;
+    //shakil
+    private OnSlideChangeListener onSlideChangeListener;
+    private Runnable finalRun;
 
     public Slider(@NonNull Context context) {
         super(context);
@@ -63,11 +61,6 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
             if (attributeSet != null) {
                 TypedArray typedArray = getContext().obtainStyledAttributes(attributeSet, R.styleable.BannerSlider);
                 try {
-                   /* indicatorSize = typedArray.getDimensionPixelSize(R.styleable.BannerSlider_indicatorSize, getResources().getDimensionPixelSize(R.dimen.default_indicator_size));
-                    selectedSlideIndicator = typedArray.getDrawable(R.styleable.BannerSlider_selected_slideIndicator);
-                    unSelectedSlideIndicator = typedArray.getDrawable(R.styleable.BannerSlider_unselected_slideIndicator);
-                    defaultIndicator = typedArray.getInt(R.styleable.BannerSlider_defaultIndicators, IndicatorShape.CIRCLE);
-                    mustAnimateIndicators = typedArray.getBoolean(R.styleable.BannerSlider_animateIndicators, true);*/
                     mustLoopSlides = typedArray.getBoolean(R.styleable.BannerSlider_loopSlides, false);
                     int slideShowIntervalSecond = typedArray.getInt(R.styleable.BannerSlider_intervalSecond, 5);
                     slideShowInterval = slideShowIntervalSecond * 1000;
@@ -107,23 +100,35 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
         });
         viewPager.setAdapter(adapter);
         slideCount = slideList.size();
-        viewPager.setCurrentItem(slideCount - 1);
-       /* if (!hideIndicators && slideCount > 1) {
-            slideIndicatorsGroup = new SlideIndicatorsGroup(getContext(), selectedSlideIndicator, unSelectedSlideIndicator, defaultIndicator, indicatorSize, mustAnimateIndicators);
-            addView(slideIndicatorsGroup);
-            slideIndicatorsGroup.setSlides(slideCount);
-            slideIndicatorsGroup.onSlideChange(slideCount - 1);
-        }*/
+        /*viewPager.setCurrentItem(slideCount - 1);
+        int s = slideCount-1;
+        Log.d("sc>>","count: "+slideCount+" set: "+s);
         if (slideCount > 1)
+            setupTimer();*/
+
+        //shakil
+        viewPager.setCurrentItem(0);
+        if (slideCount>1){
             setupTimer();
+        }
+
     }
 
+    // shakil
     public void pauseSlide(){
         mustLoopSlides = false;
     }
 
+    // shakil
     public void resumeSlide(){
         mustLoopSlides = true;
+        setupTimer();
+    }
+
+    //shakil
+    public void backFromExpand(int currentPage){
+        viewPager.setCurrentItem(currentPage);
+        setupTimer();
     }
 
     @Override
@@ -133,16 +138,8 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
 
     @Override
     public void onPageSelected(int position) {
+        Log.d("sc>>","position: "+position);
         currentPageNumber = position;
-       /* if (slideIndicatorsGroup != null && !hideIndicators) {
-            if (position == 0) {
-                slideIndicatorsGroup.onSlideChange(slideCount - 1);
-            } else if (position == slideCount + 1) {
-                slideIndicatorsGroup.onSlideChange(0);
-            } else {
-                slideIndicatorsGroup.onSlideChange(position - 1);
-            }
-        }*/
     }
 
 
@@ -156,8 +153,6 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
                     setupTimer();
                 break;
         }
-
-        Log.d("cur>>",""+currentPageNumber);
     }
 
     private void setupTimer() {
@@ -167,25 +162,46 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
                     @Override
                     public void run() {
                         try {
-                            if (currentPageNumber < slideCount)
-                                currentPageNumber += 1;
-                            else
-                                currentPageNumber = 1;
+                            //viewPager.setCurrentItem(currentPageNumber - 1, true);
+                            //shakil
 
-                            viewPager.setCurrentItem(currentPageNumber - 1, true);
                             if (mustLoopSlides){
+                                //shakil
+                                Log.d("scc>>","Before current: "+currentPageNumber+"\n");
+                                if (currentPageNumber <slideCount){
+                                    currentPageNumber += 1;
+                                    Log.d("scc>>","current: "+currentPageNumber);
+                                }
+                                else{
+                                    currentPageNumber = 1;
+                                    Log.d("scc>>","current: "+currentPageNumber);
+                                }
+                                viewPager.setCurrentItem(currentPageNumber-1, true);
+                           /*     if (currentPageNumber < slideCount)
+                                    currentPageNumber += 1;
+                                else
+                                    currentPageNumber = 1;
+                                Log.d("sc>>","currentPage after: "+currentPageNumber+"\n");
+                                viewPager.setCurrentItem(currentPageNumber-1, true);*/
                                 handler.removeCallbacksAndMessages(null);
                                 handler.postDelayed(this, slideShowInterval);
+                                onSlideChangeListener.onSlideChange(currentPageNumber);
+
+
                             }
-                            /*handler.removeCallbacksAndMessages(null);
-                            handler.postDelayed(this, slideShowInterval);*/
+                            else{
+                                handler.removeCallbacksAndMessages(null);
+                                onSlideChangeListener.onSlideChange(currentPageNumber);
+                            }
 
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                     }
                 }, slideShowInterval);
+
+            }
+            else{
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -198,16 +214,23 @@ public class Slider extends FrameLayout implements ViewPager.OnPageChangeListene
         this.itemClickListener = itemClickListener;
     }
 
-    public void setHideIndicators(boolean hideIndicators) {
-        this.hideIndicators = hideIndicators;
-        try {
-            /*if (hideIndicators)
-                slideIndicatorsGroup.setVisibility(INVISIBLE);
-            else
-                slideIndicatorsGroup.setVisibility(VISIBLE);*/
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    //shakil
+    public void slideChange(final OnSlideChangeListener onSlideChangeListener){
+        this.onSlideChangeListener = onSlideChangeListener;
     }
 
+    /*@Override
+    public boolean onTouch(View v, MotionEvent event) {
+        return false;
+    }
+
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev) {
+        return false;
+    }
+
+    @Override
+    public boolean canScrollHorizontally(int direction) {
+        return false;
+    }*/
 }

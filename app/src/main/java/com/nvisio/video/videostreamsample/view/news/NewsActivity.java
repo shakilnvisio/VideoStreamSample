@@ -13,18 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.nvisio.video.videostreamsample.R;
-import com.nvisio.video.videostreamsample.adapter.DemoAdapetr;
 import com.nvisio.video.videostreamsample.adapter.NewsAdapter;
-import com.nvisio.video.videostreamsample.model.demoModel;
 import com.nvisio.video.videostreamsample.model.news.Article;
 import com.nvisio.video.videostreamsample.model.news.NewsApiModel;
 import com.nvisio.video.videostreamsample.network.RetrofitClient;
 import com.nvisio.video.videostreamsample.network.RetrofitInstance;
 import com.nvisio.video.videostreamsample.view.NavigationActivity;
-import com.yarolegovich.discretescrollview.DSVOrientation;
-import com.yarolegovich.discretescrollview.DiscreteScrollView;
-import com.yarolegovich.discretescrollview.transform.Pivot;
-import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +37,7 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
     //demo
    /* private DiscreteScrollView scrollView;
     private List<demoModel> category;
-    private DemoAdapetr demoAdapetr;*/
+    private DemoAdapter demoAdapetr;*/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +50,7 @@ public class NewsActivity extends AppCompatActivity implements NewsAdapter.ReadM
 
         //demo
        /* demo();
-        demoAdapetr = new DemoAdapetr(category);
+        demoAdapetr = new DemoAdapter(category);
         scrollView.setAdapter(demoAdapetr);
         // general
         scrollView.setOrientation(DSVOrientation.HORIZONTAL);

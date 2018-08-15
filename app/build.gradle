@@ -57,6 +57,9 @@ dependencies {
     //animation
     implementation 'com.daimajia.easing:library:2.1'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    // auto slide
+    implementation 'me.angeldevil:AutoScrollViewPager:1.0.8'
+    implementation 'com.github.demoNo:AutoScrollViewPager:v1.0.2'
     //image slider
     //implementation 'com.github.ApendIr:slider:1.0'
     //image slide 2
