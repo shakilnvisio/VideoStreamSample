@@ -1,13 +1,16 @@
 package com.nvisio.video.videostreamsample.view;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -34,9 +37,11 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
     private String TAG = "slide>>";
     private boolean isCollapsed= false;
     List<Slide> slideList;
+    private TextView changeBg;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.advertise_demo);
         init();
         SlidingUpPanel();
@@ -48,13 +53,37 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
         mLayout = findViewById(R.id.sliding_layout);
         slider = findViewById(R.id.slide);
         discreteScrollView = findViewById(R.id.picker);
+        changeBg = findViewById(R.id.background);
     }
 
     private void SlidingUpPanel(){
         mLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, float slideOffset) {
-                Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+                if (!isCollapsed){
+                    // discrete is not showing
+                    if (slideOffset > 0.1 && slideOffset < 0.2){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.twenty));
+                    }
+                    else if (slideOffset > 0.2 && slideOffset < 0.3){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.thirty));
+                    }
+                    else if (slideOffset > 0.3 && slideOffset < 0.4){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.fifty));
+                    }
+                    else if (slideOffset > 0.4 && slideOffset < 0.5){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.sixty));
+                    }
+                    else if (slideOffset > 0.5 && slideOffset <0.6){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.seventy));
+                    }
+                    else if (slideOffset > 0.6 && slideOffset <0.7){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.ninety));
+                    }
+                    else if (slideOffset > 0.8 && slideOffset < 0.9){
+                        changeBg.setBackgroundColor(ContextCompat.getColor(AdvertiseDemoActivity.this,R.color.hundred));
+                    }
+                }
             }
 
             @Override
@@ -80,7 +109,7 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
 
     @Override
     public void onSlideChange(int selectedSlidePosition) {
-        Toast.makeText(this, ""+selectedSlidePosition, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, ""+selectedSlidePosition, Toast.LENGTH_SHORT).show();
         discreteScrollView.smoothScrollToPosition(selectedSlidePosition-1);
         discreteScrollView.setItemTransitionTimeMillis(1000);
     }
@@ -88,7 +117,6 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
     private void doWhenSlideUiIsCollapsed(){
         int currentItem = discreteScrollView.getCurrentItem();
         slider.backFromExpand(currentItem);
-        Log.d("dis>>","current: "+currentItem);
     }
 
     private void AddDataToSlider(){
@@ -104,6 +132,8 @@ public class AdvertiseDemoActivity extends AppCompatActivity implements OnSlideC
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //do what you want
+                // when clicked, expand the view
+                mLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
             }
         });
         //add slides to slider

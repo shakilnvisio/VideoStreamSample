@@ -46,6 +46,9 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
                 <com.nvisio.video.videostreamsample.library.ui.Slider
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -53,6 +56,13 @@
                     app:intervalSecond="10"
                     app:loopSlides="true">
                 </com.nvisio.video.videostreamsample.library.ui.Slider>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/background"
+                    android:background="@android:color/transparent"/>
+            </RelativeLayout>
+
         </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"

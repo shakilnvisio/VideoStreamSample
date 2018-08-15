@@ -12,4 +12,15 @@
     <color name="news_font_head">#F7F7F7</color>
     <color name="news_source">#719AC2</color>
     <color name="category_text">#8F9297</color>
+
+    <color name="ten">#1AFFFFFF</color>
+    <color name="twenty">#33FFFFFF</color>
+    <color name="thirty">#4DFFFFFF</color>
+    <color name="fourty">#66FFFFFF</color>
+    <color name="fifty">#80FFFFFF</color>
+    <color name="sixty">#99FFFFFF</color>
+    <color name="seventy">#B3FFFFFF</color>
+    <color name="eighty">#CCFFFFFF</color>
+    <color name="ninety">#E6FFFFFF</color>
+    <color name="hundred">#FFFFFFFF</color>
 </resources>
