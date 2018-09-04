@@ -3,6 +3,26 @@
     <string name="playback_channel_name">impulseby</string>
     <string name="youtube_api_key">AIzaSyD590OOBqFEQOwTICyYmIcZHw7iT2_K1O0</string>
     <string name="youtube_base_url">https://www.googleapis.com/youtube/v3/</string>
+    <string name="audio_url">http://media.impulsebuy.tk/ContentApi/AudioAPi/</string>
     <string name="news_base_url">https://newsapi.org/v2/</string>
     <string name="media_url_dash"><![CDATA[http://www.youtube.com/api/manifest/dash/id/bf5bb2419360daf1/source/youtube?as=fmp4_audio_clear,fmp4_sd_hd_clear&sparams=ip,ipbits,expire,source,id,as&ip=0.0.0.0&ipbits=0&expire=19000000000&signature=51AF5F39AB0CEC3E5497CD9C900EBFEAECCCB5C7.8506521BFC350652163895D4C26DEE124209AA9E&key=ik0]]></string>
+    <string-array name="songs">
+        <item>http://shuruappsolution.com/Audio/Badri%20Ki%20Dulhania.mp3</item>
+        <item>http://shuruappsolution.com/Audio/Boshonto%20Batashe.mp3</item>
+
+        <item>http://shuruappsolution.com/Audio/Dil%20Chahta%20Hai.mp3</item>
+        <item>http://shuruappsolution.com/Audio/Heavy.mp3</item>
+
+        <item>http://shuruappsolution.com/Audio/High%20Rated%20GabruBan%20Ja%20Rani.mp3</item>
+        <item>http://shuruappsolution.com/Audio/Kabhi%20Kabhi%20Aditi%20HD.mp3</item>
+
+        <item>http://shuruappsolution.com/Audio/Kalankini%20Radha.mp3</item>
+        <item>http://shuruappsolution.com/Audio/Momer%20Deyal.mp3</item>
+
+        <item>http://shuruappsolution.com/Audio/Kun%20Faya%20Kun.mp3</item>
+        <item>http://shuruappsolution.com/Audio/Prem%20Ki%20Naiya.mp3</item>
+
+        <item>http://shuruappsolution.com/Audio/Tum%20Saath%20Ho.mp3</item>
+        <item>http://shuruappsolution.com/Audio/ZAYN%20PILLOWTALK.mp3</item>
+    </string-array>
 </resources>

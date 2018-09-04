@@ -34,7 +34,8 @@
 
 
     <!-- SLIDING LAYOUT -->
-    <LinearLayout
+    <include layout="@layout/advertise_layout"/>
+   <!-- <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#ffffff"
@@ -75,6 +76,6 @@
                 android:layout_centerInParent="true"/>
         </RelativeLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
