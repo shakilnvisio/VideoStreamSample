@@ -108,9 +108,6 @@ public class AudioActivity extends AppCompatActivity {
             if (rqstFor.equals("tag")){
                 List<Tags> getTag = getAllAudio.get(i).getTagData();
                 for (int j = 0; j <getTag.size() ; j++) {
-                    String tagName = getTag.get(j).getTagName();
-                    String tagPoster = getTag.get(j).getPoster();
-                    Log.d("tagR>>","Name: "+tagName+" poster: "+tagPoster+"\n");
                     TagContent tag = new TagContent();
                     tag.setTagName(getTag.get(j).getTagName());
                     tag.setPosterUrl(getTag.get(j).getPoster());
@@ -120,73 +117,27 @@ public class AudioActivity extends AppCompatActivity {
             else{
                 List<Songs> getSongs = getAllAudio.get(i).getSongData();
                 for (int j = 0; j <getSongs.size() ; j++) {
-                    //StringBuilder tagObj = new StringBuilder();
-                    String tag = "";
-                    String id = getSongs.get(j).getId();
-                    String songName = getSongs.get(j).getTitle();
-                    String poster  = getSongs.get(j).getPoster();
-                    String url = getSongs.get(j).getSong();
+                    StringBuilder tagStr = new StringBuilder();
                     List<Tag> tags = getSongs.get(j).getTag();
-
                     for (int k = 0; k <tags.size() ; k++) {
-                        tag = tag+tags.get(k).getName();
-                    }
-                    /*if (tags.size()>1){
-                        for (int k = 0; k <tags.size() ; k++) {
-                            if (tags.size()==k-1){
-                                //tagObj.append(tags.get(k).getName());
-
-                                tag = tag + tags.get(k).getName();
-                                Log.d("Tagss>>","k-1 "+tags.get(k).getName());
-                            }
-                            else{
-                                //tagObj.append(tags.get(k).getName()).append(" ,");
-                                tag = tag + tags.get(k).getName()+" , ";
-                                Log.d("Tagss>>","k-1 esle "+tag);
-                            }
+                        if (k>0){
+                            tagStr.append(" ").append(tags.get(k).getName());
+                        }
+                        else{
+                            tagStr.append(tags.get(k).getName());
                         }
                     }
-                    else{
-                        //tagObj.append(tags.get(j).getName());
-                        tag = tag + getSongs.get(j).getTag().get(0).getName();
-                        Log.d("Tagss>>","if else "+tag);
-                    }*/
-
-                    Log.d("Tagss>>",tag);
                     AudioContent singleSong = new AudioContent();
                     singleSong.setSongId(getSongs.get(j).getId());
                     singleSong.setSongTitle(getSongs.get(j).getTitle());
                     singleSong.setSongPoster(getSongs.get(j).getPoster());
                     singleSong.setSongUrl(getSongs.get(j).getSong());
-                    singleSong.setSongTags(tag);
-
+                    singleSong.setSongTags(tagStr.toString());
                     AppDatabase.getAppDatabase(this).songsDao().insertSongs(singleSong);
                 }
 
             }
         }
-       /* List<Tags> getTag = getAllAudio.get(0).getTagData();
-        List<Songs> getSongs = getAllAudio.get(1).getSongData();
-
-        for (int i = 0; i <getTag.size() ; i++) {
-            String tagName = getTag.get(i).getTagName();
-            String tagPoster = getTag.get(i).getPoster();
-            Log.d("tagR>>","Name: "+tagName+" poster: "+tagPoster+"\n");
-        }
-
-        for (int i = 0; i <getSongs.size() ; i++) {
-            String tag = "";
-            String id = getSongs.get(i).getId();
-            String songName = getSongs.get(i).getTitle();
-            String poster  = getSongs.get(i).getPoster();
-            String url = getSongs.get(i).getSong();
-            List<Tag> tags = getSongs.get(i).getTag();
-            for (int j = 0; j <tags.size() ; j++) {
-                tag = tag + tags.get(j).getName()+", ";
-            }
-            String allInOne= "id: "+id+" title: "+songName+" poster: "+poster+" url: "+url+" tag: "+tag+"\n";
-            Log.d("songR>>",allInOne);
-        }*/
     }
 
 
